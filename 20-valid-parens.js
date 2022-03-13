@@ -3,29 +3,20 @@
  * @return {boolean}
  */
 var isValid = function (s) {
-  const stack = [];
-  for (const c of s) {
-    // can always open a new bracket
-    if (open.has(c)) {
-      stack.push(c);
-    } else {
-      const maybeOpen = stack.pop();
-      if (!open.has(maybeOpen)) {
-        return false;
-      } else {
-        const closeChar = open.get(maybeOpen);
-        if (closeChar !== c) {
-          return false;
-        }
-      }
-    }
-  }
-
-  if (stack.length) {
+  if (s.length % 2 !== 0) {
     return false;
   }
 
-  return true;
+  const stack = [];
+  for (const c of s) {
+    if (open.has(c)) {
+      stack.push(open.get(c));
+    } else if (c !== stack.pop()) {
+      return false;
+    }
+  }
+
+  return stack.length === 0;
 };
 
 const open = new Map([
