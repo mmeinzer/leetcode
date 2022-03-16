@@ -10,13 +10,15 @@ var productExceptSelf = function (nums) {
 
   return nums.map((current) => {
     let prod = 1;
-    m.forEach((count, key) => {
+    for (const [key, count] of m.entries()) {
       if (key === current) {
         prod *= key ** (count - 1);
       } else {
         prod *= key ** count;
       }
-    });
+
+      if (prod === 0) return 0;
+    }
 
     return prod;
   });
